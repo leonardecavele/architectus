@@ -1,35 +1,37 @@
-TESTS_DIR = tests/
+TESTS = $(wildcard $(TESTS_DIR)*.c)
+BINARIES = $(TESTS:$(TESTS_DIR)%.c=%.ev)
 
-CFLAGS = -Wall -Wextra -Werror
+.PHONY: .FORCE all clean r rb
+
 CC = cc
+CFLAGS = -Wall -Wextra -Werror -L ../ -lft
 MAKE_FLAGS = -j $$(nproc)
+TESTS_DIR = tests/
+LIB = ../libft.a
+
+all: $(BINARIES)
 
 # run make {name of function with '.c' to test}
-%.c: ../libft.a
-	$(CC) $(CFLAGS) $(TESTS_DIR)$@ ../libft.a -o $(@:.c=)
-	./$(@:.c=)
+%.ev: $(TESTS_DIR)%.c $(LIB) .FORCE
+	$(CC) $(CFLAGS) $< $(LIB) -o $@
+	./$@
 
-../libft.a:
-	make $(MAKE_FLAGS) -C ../
+# rebuild lib
+$(LIB):
+	$(MAKE) fclean -C ../
+	$(MAKE) $(MAKE_FLAGS) -C ../
+	$(MAKE) bonus $(MAKE_FLAGS) -C ../
+
+clean:
+	rm -f *.ev
 
 # relink
 r:
-	make $(MAKE_FLAGS) fclean -C ../
-	make $(MAKE_FLAGS) -C ../
-	make $(MAKE_FLAGS) -C ../
-	touch ../ft_strlen.c
-	make $(MAKE_FLAGS) -C ../
-	touch ../libft.h
-	make $(MAKE_FLAGS) -C ../
-	make $(MAKE_FLAGS) fclean -C ../
-
-# relink bonus
-rb:
-	make $(MAKE_FLAGS) fclean -C ../
-	make bonus $(MAKE_FLAGS) -C ../
-	make bonus $(MAKE_FLAGS) -C ../
-	touch ../ft_lstadd_back.c
-	make bonus $(MAKE_FLAGS) -C ../
-	touch ../libft.h
-	make bonus $(MAKE_FLAGS) -C ../
-	make $(MAKE_FLAGS) fclean -C ../
+	@make $(MAKE_FLAGS) fclean -C ../ --no-print-directory
+	@make $(MAKE_FLAGS) -C ../ --no-print-directory
+	@make $(MAKE_FLAGS) -C ../ --no-print-directory
+	@touch ../ft_strlen.c 
+	@make $(MAKE_FLAGS) -C ../ --no-print-directory
+	@touch ../libft.h
+	@make $(MAKE_FLAGS) -C ../ --no-print-directory
+	@make $(MAKE_FLAGS) fclean -C ../ --no-print-directory
