@@ -28,8 +28,8 @@ all: $(BINARIES)
 # 'make {function.ev}' to test a single function
 %.ev: $(TESTS_DIR)%.c libft.a .FORCE
 	@stty -echo
-	@wait=$(wait) ; if [ "$$wait" -eq 1 ]; then printf \
-	"\npress any key" ; read -n 1 -s ; printf "$(ERASE)" ; \
+	@wait=$(wait) ; if [ "$$wait" -eq 1 ]; then printf\
+	"\npress any key" ; read -n 1 -s ; printf "$(ERASE)" ;\
 	fi ; $(eval wait:=1)
 	@$(CC) $(CFLAGS) $< -o $@ $(SRCS) -L ../ -lft
 	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst .ev,.c,$@)
@@ -39,17 +39,18 @@ all: $(BINARIES)
 # 'make n' to test the norm
 n: fclean
 	@printf "|$(YELLOW_B)NORM CHECK$(RESET)|\n"
-	@norminette -R CheckForbiddenSourceHeader ../^architectus
+	@find .. -maxdepth 1 -type f \( -name "*.c" -o -name "*.h" \) \
+	| xargs norminette -R CheckForbiddenSourceHeader
 
 # 'make libft.a' to rebuild the libft.a
 libft.a:
-	@if [ ! -f $(LIB) ]; then \
-		stty -echo; \
-		printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)"; \
+	@if [ ! -f $(LIB) ]; then\
+		stty -echo;\
+		printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)";\
 		$(MAKE) fclean -C ../ --quiet ; make $(LIB) --no-print-directory ;\
-		printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n"; \
-		if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi; \
-		stty echo; \
+		printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n";\
+		if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi;\
+		stty echo;\
 	fi
 
 # 'make clean' to delete .ev files
@@ -75,7 +76,7 @@ r:
 	@make $(BONUS_FLAG) -C ../ --no-print-directory > /dev/null 2>&1 
 	@make $(BONUS_FLAG) -C ../ --no-print-directory 
 	@printf "|$(YELLOW_B)TOUCH .C FILE AND RUN MAKE$(RESET)|\n"
-	@if [ "$$BONUS" = "1" ]; then touch ../ft_lstadd_back_bonus.c; \
+	@if [ "$$BONUS" = "1" ]; then touch ../ft_lstadd_back_bonus.c;\
 	else touch ../ft_strlen.c; fi
 	@make $(BONUS_FLAG) -C ../ --no-print-directory
 	@printf "|$(YELLOW_B)TOUCH HEADER AND RUN MAKE$(RESET)|\n"
