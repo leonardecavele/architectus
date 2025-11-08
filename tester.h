@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 00:09:58 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/08 13:32:30 by nlallema         ###   ########.fr       */
+/*   Updated: 2025/11/08 15:41:33 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <limits.h>
 # include <string.h>
 # include <stdbool.h>
+# include <ctype.h>
+# include <stdarg.h>
 # include "../libft.h"
 
 typedef enum e_vtype {
@@ -28,10 +30,11 @@ typedef enum e_vtype {
 
 # define RESET "\033[0m"
 # define RED "\033[31m"
-# define GREEN "\033[32m"
+# define GREEN "\033[2;32m"
 
 void	set_display(const char *, const char *);
+void	set_description(const char *description);
 
-void	check_is_equal(const void *actual, const void *expected, t_vtype vtype);
+void	check_is_equal(t_vtype type, ...);
 
 #endif
