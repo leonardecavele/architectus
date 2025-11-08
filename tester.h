@@ -1,0 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tester.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 00:09:58 by nlallema          #+#    #+#             */
+/*   Updated: 2025/11/08 13:32:30 by nlallema         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef TESTER_H
+# define TESTER_H
+
+# include <stdio.h>
+# include <stdint.h>
+# include <limits.h>
+# include <string.h>
+# include <stdbool.h>
+# include "../libft.h"
+
+typedef enum e_vtype {
+  T_INT,
+  T_CHAR,
+  T_STR
+}      t_vtype;
+
+# define RESET "\033[0m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+
+void	set_display(const char *, const char *);
+
+void	check_is_equal(const void *actual, const void *expected, t_vtype vtype);
+
+#endif

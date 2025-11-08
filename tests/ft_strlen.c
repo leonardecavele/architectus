@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldecavel <ldecavel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 22:50:14 by ldecavel          #+#    #+#             */
-/*   Updated: 2025/11/07 23:08:03 by ldecavel         ###   ########.fr       */
+/*   Created: 2025/11/07 23:41:03 by nlallema          #+#    #+#             */
+/*   Updated: 2025/11/08 13:55:46 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include "../../libft.h"
+#include "tester.h"
 
 int	main(void)
 {
-	printf("libft:    |%ld|\n", ft_strlen("oui"));
-	printf("original: |%ld|\n", strlen("oui"));
+	set_display("ft_strlen", "strlen");
+	
+	char *test = "Hello World";
+	size_t actual = ft_strlen(test);
+	size_t expected = strlen(test);
+	check_is_equal(&actual, &expected, T_INT);
+	return (0);
 }
