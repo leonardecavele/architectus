@@ -4,6 +4,7 @@
 # 'make libft.a' to rebuild the libft.a
 # 'make clean' to delete .ev files
 # 'make fclean' to delete libft.a and .ev files
+# 'make re' does 'make fclean' and 'make all'
 # 'make rb' to test bonus relink
 # 'make r' to test mandatory relink
 
@@ -14,10 +15,11 @@ BINARIES = $(TESTS:$(TESTS_DIR)%.c=%.ev)
 
 SHELL := /bin/bash
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -L ../ -lft
+CFLAGS = -Wall -Wextra -Werror -I .
 TESTS_DIR = tests/
 LIB = ../libft.a
 wait := 0
+SRCS = tester.c
 
 # 'make' to test all functions at once
 all: $(BINARIES)
@@ -25,18 +27,18 @@ all: $(BINARIES)
 # 'make {function.ev}' to test a single function
 %.ev: $(TESTS_DIR)%.c $(LIB) .FORCE
 	@wait=$(wait) ; if [ "$$wait" -eq 1 ]; then printf \
-	"$(RED)PRESS ANY KEY$(RESET)" ; read -n 1 -s ; echo ; \
+	"\npress any key to continue.." ; read -n 1 -s ; printf "$(ERASE)" ; \
 	fi ; $(eval wait:=1)
-	@$(CC) $(CFLAGS) $< $(LIB) -o $@
-	@printf "$(RED)|%s|$(RESET)\n" $(subst .ev,.c,$@)
+	@$(CC) $(CFLAGS) $< -o $@ $(SRCS) -L ../ -lft
+	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst .ev,.c,$@)
 	@./$@
 
 # 'make libft.a' to rebuild the libft.a
 libft.a:
-	@printf "$(RED)BUILDING 'libft.a'$(RESET)"
+	@printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)"
 	@$(MAKE) fclean -C ../ --quiet
 	@make $(LIB) --no-print-directory
-	@printf "$(ERASE)$(RED)DONE BUILDING 'libft.a'$(RESET)\n"
+	@printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n\n"
 
 # 'make clean' to delete .ev files
 clean:
@@ -46,21 +48,24 @@ clean:
 fclean: clean
 	@$(MAKE) fclean -C ../ --quiet	
 
+# 'make re' does 'make fclean' and 'make all'
+re: fclean all
+
 # 'make rb' to test bonus relink
 rb:
 	@$(MAKE) BONUS_FLAG="bonus $(BONUS_FLAG)" r BONUS=1 --no-print-directory
 
 # 'make r' to test mandatory relink
 r:
-	@printf "$(RED)Double make:$(RESET)\n"
+	@printf "$(RED)DOUBLE MAKE$(RESET)\n"
 	@make $(BONUS_FLAG) fclean -C ../ --no-print-directory > /dev/null 2>&1 
 	@make $(BONUS_FLAG) -C ../ --no-print-directory > /dev/null 2>&1 
 	@make $(BONUS_FLAG) -C ../ --no-print-directory 
-	@printf "$(RED)C files relink:$(RESET)\n"
+	@printf "$(RED)TOUCH .C FILE AND RUN MAKE$(RESET)\n"
 	@if [ "$$BONUS" = "1" ]; then touch ../ft_lstadd_back_bonus.c; \
 	else touch ../ft_strlen.c; fi
 	@make $(BONUS_FLAG) -C ../ --no-print-directory
-	@printf "$(RED)Headers relink:$(RESET)\n"
+	@printf "$(RED)TOUCH HEADER AND RUN MAKE$(RESET)\n"
 	@touch ../libft.h
 	@make $(BONUS_FLAG) -C ../ --no-print-directory
 	@make $(BONUS_FLAG) fclean -C ../ --no-print-directory > /dev/null 2>&1 
@@ -71,4 +76,6 @@ $(LIB):
 
 RESET = \033[0m
 RED = \033[0;31m
+GREEN = \033[0;32m
 ERASE = \r\033[2K\r
+YELLOW_B = \e[43m
