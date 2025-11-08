@@ -1,9 +1,9 @@
 # HOW TO USE :
 # 'make' to test all functions at once
-# 'make {function.ev}' to test a single function
+# 'make {function.test}' to test a single function
 # 'make libft.a' to rebuild the libft.a
-# 'make clean' to delete .ev files
-# 'make fclean' to delete libft.a and .ev files
+# 'make clean' to delete .test files
+# 'make fclean' to delete libft.a and .test files
 # 'make m' to test only the mandatory part functions
 # 'make b' to test only the bonus part functions
 # 'make re' does 'make fclean' and 'make all'
@@ -14,13 +14,14 @@
 .PHONY: .FORCE all clean r rb libft.a bonus
 include list.mk
 
-BINARIES = $(patsubst %.c,%.ev,$(TESTS))
-BBINARIES = $(patsubst %.c,%.ev,$(BTESTS)) 
+BINARIES = $(patsubst %.c,$(OUT_DIR)%.test,$(TESTS))
+BBINARIES = $(patsubst %.c,$(OUT_DIR)%.test,$(BTESTS)) 
 
 SHELL := /bin/bash
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I .
 TESTS_DIR = tests/
+OUT_DIR = bin/
 LIB = ../libft.a
 wait := 0
 SRCS = tester.c
@@ -34,14 +35,15 @@ m: $(BINARIES)
 # 'make b' to test only the bonus part functions
 b: $(BBINARIES)
 
-# 'make {function.ev}' to test a single function
-%.ev: $(TESTS_DIR)%.c libft.a .FORCE
+# 'make {function.test}' to test a single function
+$(OUT_DIR)%.test: $(TESTS_DIR)%.c libft.a .FORCE
 	@stty -echo
+	@mkdir -p $(OUT_DIR)
 	@wait=$(wait) ; if [ "$$wait" -eq 1 ]; then printf \
 	"\npress any key" ; read -n 1 -s ; printf "$(ERASE)" ;\
 	fi ; $(eval wait:=1)
 	@$(CC) $(CFLAGS) $< -o $@ $(SRCS) -L ../ -lft
-	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst .ev,.c,$@)
+	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst .test,.c,$@)
 	@./$@
 	@stty echo
 
@@ -62,11 +64,11 @@ libft.a:
 		stty echo;\
 	fi
 
-# 'make clean' to delete .ev files
+# 'make clean' to delete .test files
 clean:
-	@rm -f *.ev
+	@rm -rf $(OUT_DIR)
 
-# 'make fclean' to delete libft.a and .ev files
+# 'make fclean' to delete libft.a and .test files
 fclean: clean
 	@$(MAKE) fclean -C ../ --quiet	
 
