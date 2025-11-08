@@ -25,20 +25,26 @@ SRCS = tester.c
 all: $(BINARIES)
 
 # 'make {function.ev}' to test a single function
-%.ev: $(TESTS_DIR)%.c $(LIB) .FORCE
+%.ev: $(TESTS_DIR)%.c libft.a .FORCE
+	@stty -echo
 	@wait=$(wait) ; if [ "$$wait" -eq 1 ]; then printf \
 	"\npress any key to continue.." ; read -n 1 -s ; printf "$(ERASE)" ; \
 	fi ; $(eval wait:=1)
 	@$(CC) $(CFLAGS) $< -o $@ $(SRCS) -L ../ -lft
 	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst .ev,.c,$@)
 	@./$@
+	@stty echo
 
 # 'make libft.a' to rebuild the libft.a
 libft.a:
-	@printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)"
-	@$(MAKE) fclean -C ../ --quiet
-	@make $(LIB) --no-print-directory
-	@printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n\n"
+	@if [ ! -f $(LIB) ]; then \
+		stty -echo; \
+		printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)"; \
+		$(MAKE) fclean -C ../ --quiet ; make $(LIB) --no-print-directory ;\
+		printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n"; \
+		if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi; \
+		stty echo; \
+	fi
 
 # 'make clean' to delete .ev files
 clean:
@@ -57,18 +63,20 @@ rb:
 
 # 'make r' to test mandatory relink
 r:
-	@printf "$(RED)DOUBLE MAKE$(RESET)\n"
+	@stty -echo
+	@printf "|$(YELLOW_B)DOUBLE MAKE$(RESET)|\n"
 	@make $(BONUS_FLAG) fclean -C ../ --no-print-directory > /dev/null 2>&1 
 	@make $(BONUS_FLAG) -C ../ --no-print-directory > /dev/null 2>&1 
 	@make $(BONUS_FLAG) -C ../ --no-print-directory 
-	@printf "$(RED)TOUCH .C FILE AND RUN MAKE$(RESET)\n"
+	@printf "|$(YELLOW_B)TOUCH .C FILE AND RUN MAKE$(RESET)|\n"
 	@if [ "$$BONUS" = "1" ]; then touch ../ft_lstadd_back_bonus.c; \
 	else touch ../ft_strlen.c; fi
 	@make $(BONUS_FLAG) -C ../ --no-print-directory
-	@printf "$(RED)TOUCH HEADER AND RUN MAKE$(RESET)\n"
+	@printf "|$(YELLOW_B)TOUCH HEADER AND RUN MAKE$(RESET)|\n"
 	@touch ../libft.h
 	@make $(BONUS_FLAG) -C ../ --no-print-directory
 	@make $(BONUS_FLAG) fclean -C ../ --no-print-directory > /dev/null 2>&1 
+	@stty echo
 
 $(LIB):
 	@$(MAKE)  -C ../ > /dev/null 2>&1
