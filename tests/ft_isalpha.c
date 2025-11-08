@@ -6,7 +6,7 @@
 /*   By: ldecavel <ldecavel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 22:02:25 by ldecavel          #+#    #+#             */
-/*   Updated: 2025/11/08 15:44:13 by nlallema         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:21:12 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	main(void)
 {
+	signal(SIGSEGV, &segfault_handler);
+	
 	char	c;
 
 	set_description("Test 'h' is alpha");

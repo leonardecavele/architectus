@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 00:09:58 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/08 16:42:47 by nlallema         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:24:30 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define TESTER_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <stdint.h>
 # include <limits.h>
 # include <string.h>
 # include <stdbool.h>
 # include <ctype.h>
 # include <stdarg.h>
+# include <signal.h>
 # include "../libft.h"
 
 typedef enum e_vtype {
@@ -29,8 +31,12 @@ typedef enum e_vtype {
 }      t_vtype;
 
 # define RESET "\033[0m"
-# define RED "\033[2;31m"
+# define RED "\033[31m"
 # define GREEN "\033[2;32m"
+
+void	segfault_handler(int code);
+
+void	display_description();
 
 void	set_display(const char *, const char *);
 void	set_description(const char *description);

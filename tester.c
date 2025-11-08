@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 11:32:18 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/08 16:35:07 by nlallema         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:20:21 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	_log_result(t_vtype type, _Bool ok, ...)
 	va_list	args;
 	va_start(args, ok);
 
-	printf("\n─ %d ─ %s ⸺\n", s_counter, s_description);
+	display_description();
 
 	switch (type)
 	{
@@ -39,13 +39,26 @@ static void	_log_result(t_vtype type, _Bool ok, ...)
 		case T_CHAR:
 			a = (uint64_t)va_arg(args, int);
 			b = (uint64_t)va_arg(args, int);
-			printf("%-10s |%s%c%s|\n", s_actual_name, color, (char)a, RESET);
-			printf("%-10s |%s%c%s|\n", s_expected_name, color, (char)b, RESET);
+			printf("%s∎%s %-10s|%s%c%s|\n", color, RESET, s_actual_name, color, (char)a, RESET);
+			printf("%s∎%s %-10s|%s%c%s|\n", color, RESET, s_expected_name, color, (char)b, RESET);
 			break ;
 		default:
 			printf("Type unknown: %d\n", type);
 	}
 	s_counter++;
+}
+
+void	segfault_handler(int code)
+{
+	(void)code;
+	display_description();
+	printf("[%sSEGFAULT%s]\n", RED, RESET);
+	exit(0);
+}
+
+void	display_description()
+{
+	printf("\n─ %d ─ %s ⸺\n", s_counter, s_description);
 }
 
 void	set_description(const char *description)
