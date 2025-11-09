@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ldecavel <ldecavel@student.42lyon.fr>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/11/09 17:42:42 by ldecavel          #+#    #+#              #
+#    Updated: 2025/11/09 17:42:43 by ldecavel         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # variables
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I .
@@ -38,7 +50,7 @@ $(OUT_DIR)%.test: $(TESTS_DIR)%.c libft.a .FORCE
 	"\npress any key" ; read -n 1 -s ; printf "$(ERASE)" ;\
 	fi ; $(eval WAIT:=1)
 	@$(CC) $(CFLAGS) $< -o $@ $(SRCS) -L ../ -lft
-	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst .test,.c,$@)
+	@printf "|$(YELLOW_B)%s$(RESET)|\n" $(subst bin/,,$(subst .test,,$@))
 	@./$@
 	@stty echo
 
