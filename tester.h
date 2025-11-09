@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 00:09:58 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/08 17:24:30 by nlallema         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:14:52 by ldecavel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@
 # include <signal.h>
 # include "../libft.h"
 
-typedef enum e_vtype {
-  T_INT,
-  T_CHAR,
-  T_STR
-}      t_vtype;
+typedef enum e_vtype
+{
+	INT,
+	SIZE_T,
+	CHAR,
+	STR
+}	t_vtype;
 
 # define RESET "\033[0m"
 # define RED "\033[31m"

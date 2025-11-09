@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ldecavel <ldecavel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 23:41:03 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/09 11:16:01 by ldecavel         ###   ########.fr       */
+/*   Created: 2025/11/09 10:50:59 by ldecavel          #+#    #+#             */
+/*   Updated: 2025/11/09 12:01:37 by ldecavel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,27 @@ int	main(void)
 {
 	signal(SIGSEGV, &segfault_handler);
 
-	char	*test;
+	char	*ft_dest;
+	char	*dest;
+	char	*src;
+	int		size;
 
 	// test 1
 	set_description("Test regular string");
-	test = "Hello world";
-	check_is_equal(INT, ft_strlen(test), strlen(test));
-	
-	// test 2
-	set_description("Test empty string");
-	test = "";
-	check_is_equal(INT, ft_strlen(test), strlen(test));
-	
-	// test 3
-	set_description("Test string with null terminated only");
-	test = "\0";
-	check_is_equal(INT, ft_strlen(test), strlen(test));
+	ft_dest = malloc(10); dest = malloc(10);
+	src = "Hello world";
+	size = 5;
+	check_is_equal(SIZE_T,
+	ft_strlcpy(ft_dest, src, size),
+	strlcpy(dest, src, size));
+
+	set_description("Empty dest");
+	ft_dest = ""; dest = "";
+	src = "Hello";
+	size = 5;
+	check_is_equal(SIZE_T,
+	ft_strlcpy(ft_dest, src, size),
+	strlcpy(dest, src, size));
 	
 	return (0);
 }
