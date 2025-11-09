@@ -6,7 +6,7 @@
 /*   By: ldecavel <ldecavel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 22:02:25 by ldecavel          #+#    #+#             */
-/*   Updated: 2025/11/09 11:16:16 by ldecavel         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:53:23 by ldecavel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	main(void)
 {
-	signal(SIGSEGV, &segfault_handler);
-	
 	char	c;
 
 	// Test 1

@@ -6,16 +6,16 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 18:18:53 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/09 11:15:54 by ldecavel         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:52:44 by ldecavel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tester.h"
 
+int atoi(const char *nptr);
+
 int	main(void)
 {
-	signal(SIGSEGV, &segfault_handler);
-
 	char	*test;
 
 	// test 1

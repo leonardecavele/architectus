@@ -6,16 +6,16 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 23:41:03 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/09 11:16:01 by ldecavel         ###   ########.fr       */
+/*   Updated: 2025/11/09 14:56:38 by ldecavel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tester.h"
 
+size_t strlen(const char *s);
+
 int	main(void)
 {
-	signal(SIGSEGV, &segfault_handler);
-
 	char	*test;
 
 	// test 1
