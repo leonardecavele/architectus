@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 11:32:18 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/09 18:04:54 by ldecavel         ###   ########.fr       */
+/*   Updated: 2025/11/09 21:32:14 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,32 @@
 #include <stdarg.h>
 #include <signal.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
 
 static char	*g_actual_name = "actual";
 static char	*g_expected_name = "expected";
 static char	*g_description = "";
 static int	g_counter = 1;
+
+static int	_run(void (*f)(void))
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+    if (pid == 0)
+    {
+		f();
+        exit(0);
+    }
+    waitpid(pid, &status, 0);
+    if (WIFSIGNALED(status))
+        return (WTERMSIG(status));
+    else
+		return (0);
+}
 
 static void	_print_line(char *title, uint64_t res, t_type type, char *color)
 {
@@ -40,6 +61,8 @@ static void	_print_line(char *title, uint64_t res, t_type type, char *color)
 			printf("%c", (int)res); break ;
 		case STR:
 			printf("%s", (char *)res); break ;
+		case PTR:
+			printf("%p", (void *)res); break ;
 		default:
 			printf("unknown type '%d'\n", type);
 	}
@@ -79,6 +102,28 @@ void	set_display(const char *actual_name, const char *expected_name)
 	g_expected_name = (char *)expected_name;
 }
 
+void	handle(void (*f)(void))
+{
+	int	status;
+
+	status = _run(f);
+	if (status == SIGSEGV)
+		printf("%s∎%s |%sSegfault%s|\n", RED, RESET, RED, RESET);
+}
+
+void	handle_sigsegv(const char *description, void (*f)(void), bool must_segfault)
+{
+	int		status;
+	char	*actual;
+	char	*expected;
+
+	status = _run(f);
+	set_description(description);
+	actual = (status == SIGSEGV) ? "Segfault" : "No Segfault";
+	expected = (must_segfault) ? "Segfault" : "No Segfault";
+	check_is_equal(STR, actual, expected);
+}
+
 void check_is_equal(t_type type, ...)
 {
 	uint64_t	a, b;
@@ -86,20 +131,23 @@ void check_is_equal(t_type type, ...)
 	
 	va_list	args;
 	va_start(args, type);
-	a = va_arg(args, uint64_t);
-	b = va_arg(args, uint64_t);
 	va_end(args);
 
 	ok = 0;
 	switch (type)
 	{
 		case SIZE_T:
+		case PTR:
 		case INT:
 		case CHAR:
+			a = va_arg(args, uint64_t);
+			b = va_arg(args, uint64_t);
 			ok = (a == b);
 			_log_result(type, ok, a, b);
 			break ;
 		case STR:
+			a = va_arg(args, uint64_t);
+			b = va_arg(args, uint64_t);
 			if (!a && !b)
 				ok = 1;
 			else
