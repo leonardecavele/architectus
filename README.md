@@ -24,6 +24,11 @@ Run the following command to compile all tests:
 make
 ```
 
+```todo
+```
+- check better error catching
+- do the tests
+
 Or to run a specific test (WIP):
 
 ```bash
