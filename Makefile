@@ -23,11 +23,11 @@ include list.mk
 
 WAIT := 0
 # 'make' to test all functions at once
-all: fclean $(BINARIES) $(BBINARIES)
+all: $(BINARIES) $(BBINARIES)
 # 'make m' to test only the mandatory part functions
-m: fclean $(BINARIES)
+m: $(BINARIES)
 # 'make b' to test only the bonus part functions
-b: fclean $(BBINARIES)
+b: $(BBINARIES)
 # 'make {function.test}' to test a single function
 .ONESHELL:
 $(OUT_DIR)%.test: $(TESTS_DIR)%.c libft.a .FORCE
@@ -105,11 +105,9 @@ $(LIB):
 # 'make libft.a' to rebuild the libft.a
 libft.a:
 	@$(ERR_TRAP); \
-	if [ ! -f $(LIB) ]; then\
-		stty -echo;\
-		printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)";\
-		$(MAKE) fclean -C ../ --quiet ; make $(LIB) --no-print-directory ;\
-		printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n";\
-		if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi;\
-		stty echo;\
-	fi
+	stty -echo;\
+	printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)";\
+	$(MAKE) fclean -C ../ --quiet ; make $(LIB) --no-print-directory ;\
+	printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n";\
+	if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi;\
+	stty echo;\
