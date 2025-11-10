@@ -108,7 +108,8 @@ libft.a:
 	stty -echo;\
 	printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)";\
 	$(MAKE) fclean -C ../ --quiet ; make -C ../ --quiet --no-print-directory > /dev/null 2>&1;\
-	make bonus -C ../ --quiet --no-print-directory > /dev/null 2>&1;\
+	if ! echo "$(MAKECMDGOALS)" | grep -qE 'm'; then \
+	make bonus -C ../ --quiet --no-print-directory > /dev/null 2>&1; fi;\
 	printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n";\
 	if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi;\
 	stty echo;\
