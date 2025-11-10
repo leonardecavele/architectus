@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 11:32:18 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/10 01:27:41 by nlallema         ###   ########.fr       */
+/*   Updated: 2025/11/10 01:32:24 by nlallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*g_actual_name = "actual";
 static char	*g_expected_name = "expected";
 static char	*g_description = "";
 static int	g_counter_main = 1;
-static int	g_counter_inproc = 1;
+static int	g_counter_inproc = 0;
 
 static int	_run(void (*f)(void))
 {
@@ -60,7 +60,7 @@ static void	_print_line(char *title, uint64_t res, t_type type, char *color)
 		case CHAR:
 			printf("%c", (int)res); break ;
 		case STR:
-			if (!*(char *)res)
+			if (res && !*(char *)res)
 				printf("(empty)");
 			else
 				printf("%s", (char *)res);
@@ -110,7 +110,7 @@ void	handle(void (*f)(void))
 {
 	int	status;
 
-	g_counter_inproc = 1;
+	g_counter_inproc = 0;
 	status = _run(f);
 	if (status == SIGSEGV)
 		printf("%s∎%s |%sSegfault%s|\n", RED, RESET, RED, RESET);
@@ -123,7 +123,7 @@ void	handle_sigsegv(const char *description, void (*f)(void), bool must_segfault
 	char	*actual;
 	char	*expected;
 
-	g_counter_inproc = 1;
+	g_counter_inproc = 0;
 	status = _run(f);
 	set_description(description);
 	actual = (status == SIGSEGV) ? "Segfault" : "No Segfault";
