@@ -1,14 +1,12 @@
-# 👷‍♂️ Libft Tester — Custom Unit Cases
-
-## 🏗️ Project Goal
-This repository contains a set of custom unit tests designed to verify the correct behavior of functions in the libft project.  
-The goal is to help ensure compliance and robustness of each function.
+## Libft Tester
+> This repository contains a set of custom unit tests designed to verify the correct behavior of functions in the libft project.  
+The goal is to help ensure compliance and robustness of each function. Since it's made in two days, don't blindly trust it.
 
 ---
 
-## 📦 Installation
+## Installation
 
-1. Clone this repository inside your `libft` folder:
+Clone this repository inside your `libft` folder
 
 ```bash
 git clone https://github.com/leonardecavele/libft-tester
@@ -16,37 +14,65 @@ git clone https://github.com/leonardecavele/libft-tester
 
 ---
 
-## ⚙️ Compilation
+## Commands
 
-Run the following command to compile all tests:
-
+**Run the following command to compile all tests**
 ```bash
 make
 ```
 
-```todo
-```
-- check better error catching
-- do the tests
-
-Or to run a specific test (WIP):
-
+**Test only the mandatory part**
 ```bash
-make ft_strlen
+make m
 ```
-# HOW TO USE :
-# 'make' to test all functions at once
-# 'make {function.test}' to test a single function
-# 'make libft.a' to rebuild the libft.a
-# 'make clean' to delete .test files
-# 'make fclean' to delete libft.a and .test files
-# 'make m' to test only the mandatory part functions
-# 'make b' to test only the bonus part functions
-# 'make re' does 'make fclean' and 'make all'
-# 'make check' to check files
-# 'make checkb' to check bonus files
-# 'make rb' to test bonus relink
-# 'make n' to test the norm
-# 'make r' to test mandatory relink
 
+**Test only the bonus part**
+```bash
+make b
+```
 
+**Run a specific test**
+```bash
+make {function name}.test
+# example: make ft_strlen.test
+```
+
+**Try to make your libft relink**
+```bash
+make r
+```
+
+**Try to make your libft relink with bonuses**
+```bash
+make rb
+```
+
+**Check missing and extra files of your libft excluding bonuses**
+```bash
+make check
+```
+
+**Check missing and extra files of your libft including bonuses**
+```bash
+make checkb
+```
+
+**Check the norm of your libft**
+```bash
+make n
+```
+
+**Rebuild the libft**
+```bash
+make libft.a
+```
+
+**Clean the tests files in bin directory**
+```bash
+make clean
+```
+
+**Clean the tests files in bin directory and delete libft.a**
+```bash
+make fclean
+```
