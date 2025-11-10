@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ldecavel <ldecavel@student.42lyon.fr>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/09 17:42:42 by ldecavel          #+#    #+#              #
-#    Updated: 2025/11/10 09:42:18 by nlallema         ###   ########lyon.fr    #
-#                                                                              #
-# **************************************************************************** #
-
 # variables
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I .
@@ -35,11 +23,11 @@ include list.mk
 
 WAIT := 0
 # 'make' to test all functions at once
-all: $(BINARIES) $(BBINARIES)
+all: fclean $(BINARIES) $(BBINARIES)
 # 'make m' to test only the mandatory part functions
-m: $(BINARIES)
+m: fclean $(BINARIES)
 # 'make b' to test only the bonus part functions
-b: $(BBINARIES)
+b: fclean $(BBINARIES)
 # 'make {function.test}' to test a single function
 .ONESHELL:
 $(OUT_DIR)%.test: $(TESTS_DIR)%.c libft.a .FORCE
@@ -60,8 +48,6 @@ clean:
 # 'make fclean' to delete libft.a and .test files
 fclean: clean
 	@$(MAKE) fclean -C ../ --quiet
-# 'make re' does 'make fclean' and 'make all'
-re: fclean all
 
 search:
 	@$(ERR_TRAP); \
