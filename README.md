@@ -33,7 +33,7 @@ make b
 
 **Run a specific test**
 ```bash
-make {function name}.test
+make ft_{function name}.test
 # example: make ft_strlen.test
 ```
 
