@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 23:41:05 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/10 10:24:50 by ldecavel         ###   ########lyon.fr   */
+/*   Updated: 2025/11/10 14:56:22 by nlallema         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void    test2(void)
 {
     list = ft_lstnew("first");
 
-    set_description("Passing NULL as list pointer should segfault.");
     ft_lstadd_back(NULL, list);
     free(list);
 }
@@ -56,7 +55,6 @@ void    test3(void)
 {
     list = ft_lstnew("hello");
 
-    set_description("Passing NULL as node to add should not change the list.");
     ft_lstadd_back(&list, NULL);
     check_is_equal(PTR, list->next, NULL);
 

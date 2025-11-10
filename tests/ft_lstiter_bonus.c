@@ -6,7 +6,7 @@
 /*   By: nlallema <nlallema@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 23:48:46 by nlallema          #+#    #+#             */
-/*   Updated: 2025/11/10 12:51:51 by nlallema         ###   ########lyon.fr   */
+/*   Updated: 2025/11/10 14:55:28 by nlallema         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void test1(void)
 void test2(void)
 {
     list = NULL;
-    
-	set_description("Calling ft_lstiter with NULL list should not crash");
     ft_lstiter(list, _increment);
 }
 
