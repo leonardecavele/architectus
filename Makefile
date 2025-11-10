@@ -107,7 +107,7 @@ libft.a:
 	@$(ERR_TRAP); \
 	stty -echo;\
 	printf "[$(RED)BUILDING$(RESET)] 'libft.a'$(RESET)";\
-	$(MAKE) fclean -C ../ --quiet ; make -C ../ --quiet --no-print-directory ;\
+	$(MAKE) fclean -C ../ --quiet ; make -C ../ --quiet --no-print-directory > /dev/null 2>&1;\
 	printf "$(ERASE)[$(GREEN)DONE$(RESET)] 'libft.a'$(RESET)\n";\
 	if ! echo "$(MAKECMDGOALS)" | grep -qE "libft.a"; then echo; fi;\
 	stty echo;\
