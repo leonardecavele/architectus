@@ -81,7 +81,7 @@ n: fclean
 
 # 'make rb' to test bonus relink
 rb:
-	@$(MAKE) BONUS_FLAG="bonus $(BONUS_FLAG)" r BONUS=1 --no-print-directory
+	@$(MAKE) BONUS_FLAG="bonus $(BONUS_FLAG)" r BONUSF=1 --no-print-directory
 # 'make r' to test mandatory relink
 r:
 	@stty -echo
@@ -90,7 +90,7 @@ r:
 	@make $(BONUS_FLAG) -C ../ --no-print-directory > /dev/null 2>&1 
 	@make $(BONUS_FLAG) -C ../ --no-print-directory 
 	@printf "|$(TITLE)TOUCH .C FILE AND RUN MAKE$(RESET)|\n"
-	@if [ "$$BONUS" = "1" ]; then touch ../ft_lstadd_back_bonus.c;\
+	@if [ "$$BONUSF" = "1" ]; then touch ../ft_lstadd_back_bonus.c;\
 	else touch ../ft_strlen.c; fi
 	@make $(BONUS_FLAG) -C ../ --no-print-directory
 	@printf "|$(TITLE)TOUCH HEADER AND RUN MAKE$(RESET)|\n"
